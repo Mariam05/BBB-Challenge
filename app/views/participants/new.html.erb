@@ -1,0 +1,9 @@
+<h1> <%= @page_title %> </h1>
+<%= form_for :participant do |f| %>
+    <p>
+        <%= f.text_field :name%>
+   
+        <%= f.submit :Join %>
+    </p>
+
+<% end %>
