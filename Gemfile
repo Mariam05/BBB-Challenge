@@ -54,3 +54,4 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'bigbluebutton-api-ruby', '~> 1.7'
 gem 'httparty'
+gem 'nokogiri'

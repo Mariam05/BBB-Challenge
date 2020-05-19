@@ -1,0 +1,43 @@
+<div class="recordings index">
+       
+    <div class="join meeting">
+        <h1>Join Demo Meeting</h1>
+
+        <!-- The following line would also work with only @subject int the params, 
+        because RoR would be able to tell that the subject isn't saved in the database, 
+        so it knows that the url will be the url used to add a subject to the database, 
+        and that the method for that is post. -->
+        <%= form_for(Participant.new) do |f| %>
+
+            <table summary="Subject form fields">
+                <tr>
+                    <th>Name</th>
+                    <td><%= f.text_field(:name)%></td>
+                    <td>
+                    <div class="form-buttons">
+                        <%= f.submit("Join Meeting")%>
+                        </div>
+                    </td>
+                </tr>         
+            </table>
+        <% end %>
+    </div>
+   
+    <br>
+
+    <h2>Recordings</h2>
+    <table class="listing" summary="Subject list">
+        <tr class="header">
+            <th>Recording</th>
+            <th>Actions</th>
+        </tr>
+        <% @recordings.each do |recording| %>
+        <tr>
+            <td><%= recording.meetingID %></td>
+            <td class="actions">
+                <%= link_to("Delete", recording_path(recording, :meetingID => recording.meetingID), :method => 'delete', :class => 'action delete')%>
+            </td>
+        </tr>
+        <% end %>
+    </table>
+</div>
