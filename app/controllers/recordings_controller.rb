@@ -8,7 +8,7 @@ class RecordingsController < ApplicationController
     @server_url = "https://bbb.mariam.blindside-dev.com/bigbluebutton/api/"
     apicall_name = "getRecordings"
     get_request = @server_url + apicall_name + "?" + "checksum=#{compute_checksum("", apicall_name)}"
-    rec_response = HTTParty.get(get_request)
+    rec_response = HTTParty.get(get_request, timeout: 3000) # 5 min timeout
     # puts "1GET RECORDING RESPONSE: " + rec_response.to_s
     recordings_parser = Nokogiri::XML(rec_response.body).xpath("//recording")
 
@@ -42,7 +42,7 @@ class RecordingsController < ApplicationController
     apicall_name = "create"
     urlparams = apicall +"&checksum=#{compute_checksum(apicall, apicall_name)}"
     create_request = server_url + apicall_name + "?" + urlparams
-    response = HTTParty.get(create_request)
+    response = HTTParty.get(create_request, timeout: 3000) # 5 min timeout
     puts "RESPONSE: " + response.to_s
 
     # Next: Join the Meeting
@@ -64,7 +64,7 @@ class RecordingsController < ApplicationController
     apicall_name = "deleteRecordings"
     urlparams = parameters + "&checksum=#{compute_checksum(parameters, apicall_name)}"
     create_request = server_url + apicall_name + "?" + urlparams
-    response = HTTParty.get(create_request)
+    response = HTTParty.get(create_request, timeout: 3000) # 5 min timeout
 
     redirect_to recordings_path
   end

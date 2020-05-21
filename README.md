@@ -1,4 +1,5 @@
 # The BigBlueButton Challenge - Summmer 2020
+[![Build Status](https://travis-ci.org/Mariam05/BBB-Challenge.svg?branch=master)](https://travis-ci.org/Mariam05/BBB-Challenge)
 
 ### First steps
 1. Prepare your own Desktop computer installing Ubuntu 18.04 for Desktop and any IDE of your preference
