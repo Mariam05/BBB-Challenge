@@ -1,12 +1,28 @@
 language: ruby
 rvm:
-    - 2.7.1
+- 2.7.1
 cache: bundler
 services:
-    - postgresql
+- postgresql
+- docker
 before_script:
-    - bundle exec rake db:create
-    - bundle exec rake db:migrate
+- bundle exec rake db:create
+- bundle exec rake db:migrate
 script:
-    - bundle install
-    - bundle exec rspec
+- bundle install
+- bundle exec rspec
+env:
+  global:
+  - secure: JJFVodNRW6uPfwmEBB3mhPpNM7bA4DtAAfTsYc8Rxsm3ssEjb7VrYET1tZpbwnlcSJAEDQE7zTYrWjPIn6OnCUgpTKVKZdysfKZ0aCf1n6L8bv8kkG2/TZDWcvzReb31eBebd9oblJ4Ewkw6Ng2WlUDRKlwGi98JSLzvCRZtSXuacQL4lfQzweORpHlbNmTKsi0/P6vgG13k7aW22RNnOe9WZlbKOvYGjTtGbB9ATwm4PrgrIoWeoElczL7iVJPQhFT4AVEdzDhV/FHRleQvTbYzl4Ht8sMkxnQRraHIT6B3Xm4f/6NIsF9jifvASPeId9sAamI3X1Az6OFE7IqmbpPRU3W+fL0e5rsbasg6OhCnTHK4oaHV7hv8Y8NIWsg742jZpYFj1xtRnj1ig5aF3eKLBp0ss2o9R+TWpqCxTK34MHmw1f/nIrqYDPttH+zoOrfHlL/c21jkqhXP7kXhRel/Ylcf+9F//PH0ar0GwXYQYzPFZzJRsPlUR2uI7DQ33cHBRGoVwKZ8aMQ7tMaMz403K5BhVWH99CHytiAD2s/Yn3cYXGP8fRDQu6qX/8pbgd0b/c5Na1FmibsaH5zNRZyUU8VM7DLCkSiVo8Lr8wTAl/+06zo4a74WlnIIxWFOZvROYp86yVAnjlA9eAv8YqH6E/pA2bdzbr349nTgZzM=
+  - secure: Qn8caMZhXjBovRyt3i2aWW1pDXmtz7xGTqLW25AWBtVuHa6ShorR+eYHa0r1mcVnRudzwwdbnN8BZ6ND6vP69QXRB1oVwxt9SZ8ORhewBWdPRM5foNzW/Rg0nRIBw8+B+otmgdUZpFxsdoXjueODwvsCjeaGGrEP/qleWDdrpl+d5NJCpc5whZkiQLrl+L3XpOemdJwOBJdi4fqU2pKNmy+HvrcuRz2ukag6NBYPvFhlFVQBiu5r9FWhv5UmQTiXCXGp5uJXjLkD5O+33UjXFgf0B9FrBcOHyjRxF974siuYKeHVECw8BVvMyWIaLVDi0p1IueZA8RIJnSwkp24QTfE8BkNJN2cFDhq7rOUyEny9eRbywtr2xUGs2IsBX6l9IibyVozoTRuiXRi5GGXq1KNqq5lH5E9hnExL60bfnwolQ/LakB5MrukPDLM5pSIga3y2N12NITN+gU7ScTeFEVWaQScFZK62uIKYTU9hnPX/NYDuXXr29YXZaXkCFtv9ORhnZBBs4GHPmeq7Uz37KocpoyFapsvndZ/gtVcnV4sl4We480VoH3ViXcvtwl9hIJVbV/qjbQlnUIMp7kZwzBf3EMOgZnPzI8SGT3N7xbNnQATsTy2wnZ/S+N+G3ELXdcNuElNhy+7TxEXe6Oud3qfKuqQU18SwZ2UC/7+sXNA=
+  - secure: eRINP3M/KaPFSp3KXf23Ij2pklez2aCFgmJaf5kBcNAm4t5A2sjEohVIvftngXyk0oD7EVPTWiOsbLZePx6v/iLoxaGf5H5ZUqm4+dCQzV+FfR0mtNMn2HYVaEs49ztg7rtqwPo/NjAUDZFSmf0KBWnq0AKgGtCXm1tf4jYFwxch763+Q14lFlwjGTamyq+UEqD9Pi/FbWbXkAYgFniBUWK7ZPjiX2jXmg5VhKqErIKalkWS2UEJVKPXlqicpVKanm7UcviqjyX0jTIQ+Wke0oKb/Ac4HV2XRWcNW8gRrbVgkh9q1eYHdPPC202I4rjlL0PeAIecySpUUw1bXJew1NkqLXbqqLB11IurNlBTcfB4NMmCi8zhQU5juAkR7UjowuFXGEzY4Ertxuh9DxU6vFn4VgHYfrnBuJz9yj8Kl4pPh8Jk2HIvoDYxPD4cjb4IgL8ZUYbFlf1+oZ7fgvRehU9B5txMAQiSiImmpaWQULuiEamRPcMyaeef6Y/Ny9xdf19fGIAaOiTs1I/9/tzLcGlVQ50UHe1rb7HkS6FxnwODfo3LsHx49NAP1vIhAJVzQKTSLnMT78RcTD09EdLi34mh4jrAJiL1DpGt/2TnsCV/c+L9UBjAPYvPBbTkmhZYvhonjPiwePibIBwfzmAQxKNm64i4bwYwTBDJhd5Xcb4=
+  - COMMIT=${TRAVIS_COMMIT::8}
+
+after_success:
+    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+    - export REPO=Mariam05/BBB-Challenge
+    - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+    - docker build -f Dockerfile -t $REPO:$COMMIT .
+    - docker tag $REPO:$COMMIT $REPO:$TAG
+    - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
+    - docker push $REPO
