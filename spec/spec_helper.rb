@@ -17,9 +17,8 @@ WebMock.disable_net_connect!(allow_localhost: true)
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
 
-
+# this is a mock response from the server
   config.before(:each) do
-    # stub_request(:any, "bbb.mariam.blindside-dev.com").to_return(status: 320)
     stub_request(:any, /bbb.mariam.blindside-dev/).
          with(
            headers: {
