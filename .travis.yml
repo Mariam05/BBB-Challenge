@@ -19,9 +19,9 @@ env:
   - COMMIT=${TRAVIS_COMMIT::8}
 
 after_success:
-    - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-    - export REPO=Mariam05/BBB-Challenge
-    - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH ; fi`
+    - docker login -u $DOCKER_USER -p $DOCKER_PASS docker.io 
+    - export REPO=iammariam/bbb_challenge
+    - export TAG=latest
     - docker build -f Dockerfile -t $REPO:$COMMIT .
     - docker tag $REPO:$COMMIT $REPO:$TAG
     - docker tag $REPO:$COMMIT $REPO:travis-$TRAVIS_BUILD_NUMBER
