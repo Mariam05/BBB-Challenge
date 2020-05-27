@@ -7,15 +7,20 @@ RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client yarn
 
 # Create directory
+# ENV RAILS_ROOT /bbb-demo2
+# RUN mkdir -p $RAILS_ROOT 
+
 RUN mkdir /bbb-demo2
 WORKDIR /bbb-demo2
+# Set working directory
+# WORKDIR $RAILS_ROOT
 
 # Setting env up
 ENV RAILS_ENV='production'
 ENV RACK_ENV='production'
 
-COPY Gemfile /bbb-demo2/Gemfile
-COPY Gemfile.lock /bbb-demo2/Gemfile.lock
+COPY Gemfile Gemfile
+COPY Gemfile.lock Gemfile.lock
 RUN bundle install
 RUN yarn install --check-files
 COPY . /bbb-demo2
@@ -28,4 +33,5 @@ ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000
 
 # Start the main process.
-CMD ["RAILS_ENV=production", "rails", "server", "-b", "0.0.0.0"]
+CMD ["rails", "server", "-b", "0.0.0.0"]
+# CMD ["bundle", "exec", "puma", "-C", "/config/puma.rb"]

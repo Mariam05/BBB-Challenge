@@ -270,7 +270,7 @@ DEPENDENCIES
   listen (~> 3.2)
   nokogiri
   pg (>= 0.18, < 2.0)
-  puma (~> 4.1)
+  puma (~> 4.3)
   rails (~> 6.0.3)
   rails-controller-testing
   rails_12factor
