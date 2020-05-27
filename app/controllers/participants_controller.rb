@@ -3,7 +3,6 @@ require('digest')
 require('httparty')
 
 class ParticipantsController < ApplicationController
-
   def new
     @page_title = "Join a Demo Meeting"
     @participant = Participant.new
@@ -16,17 +15,17 @@ class ParticipantsController < ApplicationController
     if @participant.save
 
       puts("~ SAVED PARTICIPANT, CREATING MEETING")
-      redirect_to '/recordings/create' #recordings_path
+      redirect_to '/recordings/create' # recordings_path
     else
       redirect_to('new')
     end
   end
 
-  private 
+  private
+
   def compute_checksum(apicall, apicallname)
     shared_secret = "EE7QiaPSgjYODK4u4gA1Vw4VVMF2iO7w5w5d3RDW0"
     string_to_sh1 = apicallname + apicall + shared_secret
-    Digest::SHA1.hexdigest string_to_sh1 #return the sha1 code
+    Digest::SHA1.hexdigest string_to_sh1 # return the sha1 code
   end
-
 end
