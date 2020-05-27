@@ -16,20 +16,19 @@ WebMock.disable_net_connect!(allow_localhost: true)
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-
-# this is a mock response from the server
+  # this is a mock response from the server
   config.before(:each) do
-    stub_request(:any, /bbb.mariam.blindside-dev/).
-         with(
-           headers: {
-          'Accept'=>'*/*',
-          'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-          'User-Agent'=>'Ruby'
-           }).
-         to_return(status: :found, body: "", headers: {})
-
+    stub_request(:any, /bbb.mariam.blindside-dev/)
+      .with(
+        headers: {
+          'Accept' => '*/*',
+          'Accept-Encoding' => 'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+          'User-Agent' => 'Ruby'
+        }
+      )
+      .to_return(status: :found, body: "", headers: {})
   end
-  
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -114,4 +113,3 @@ RSpec.configure do |config|
 end
 
 APP_ROOT = File.expand_path('../..', __FILE__)
-
